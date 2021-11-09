@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-FILENAME = './videos/2.xml'
+FILENAME = '../videos/2.xml'
 
 doc = ET.parse(FILENAME)
 
@@ -21,13 +21,13 @@ for person in objects:
     for action in actions:
         action_name = action.findtext('actionname')
         action_list[action_name] = []
-        
+
         action_frames = action.findall('frame')
         for action_frame in action_frames:
             start = action_frame.findtext('start')
             end = action_frame.findtext('end')
             action_list[action_name].append([start, end])
-        
+
     print(f'objectname: {objectname}')
     print(f'keyframe: {keyframe}')
     print(f'keypoint_x: {keypoint_x}')
