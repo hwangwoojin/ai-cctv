@@ -28,7 +28,7 @@ python3 track.py --source <Path for the video file> --yolo_weights yolov5n6.pt -
 or using script file.
 
 ```
-./track.sh
+./scripts/track.sh
 ```
 
 ## reference
