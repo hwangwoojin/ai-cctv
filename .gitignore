@@ -1,7 +1,8 @@
+# Directories for data files
 /videos
 /images
-/data
-/kafka/*.mp4
+/xmls
+/model
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,python
