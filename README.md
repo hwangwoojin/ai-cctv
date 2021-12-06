@@ -31,7 +31,21 @@ or using script file.
 ./scripts/track.sh
 ```
 
+output text file will be generated at `Yolov5_DeepSort_Pytorch/inference`.
+
+## Parse XML meta data
+
+About XML Meta data format: [here](https://aihub.or.kr/aidata/139)
+
+Parse XML file.
+
+```
+python3 utils/xml_parser.py <filename>
+```
+
 ## reference
+
+[AI Hub](https://aihub.or.kr/)
 
 [yolov5](https://github.com/ultralytics/yolov5)
 
