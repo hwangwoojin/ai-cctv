@@ -31,6 +31,12 @@ or using script file.
 ./scripts/track.sh
 ```
 
+if permission denied,
+
+```
+chmod 755 ./scripts/trach.sh
+```
+
 output text file will be generated at `Yolov5_DeepSort_Pytorch/inference/output`.
 
 ## Parse XML meta data
