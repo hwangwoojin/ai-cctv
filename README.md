@@ -31,7 +31,7 @@ or using script file.
 ./scripts/track.sh
 ```
 
-output text file will be generated at `Yolov5_DeepSort_Pytorch/inference`.
+output text file will be generated at `Yolov5_DeepSort_Pytorch/inference/output`.
 
 ## Parse XML meta data
 
@@ -42,6 +42,19 @@ Parse XML file.
 ```
 python3 utils/xml_parser.py <filename>
 ```
+
+## Get only Images with abnormal action
+
+use `image_getter.py` to get only images with abnormal action by using XML meta data.
+
+```
+python3 utils/image_getter.py <video name> Yolov5_DeepSort_Pytorch/inference/output/<result name> <output name>
+```
+
+with some restrictions,
+
+1. at abnormal actions.
+2. detect 2 people. (not 1 or 3)
 
 ## reference
 
