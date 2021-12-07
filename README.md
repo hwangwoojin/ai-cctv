@@ -1,5 +1,7 @@
 # ai-cctv
 
+![](https://user-images.githubusercontent.com/67536413/144979306-4586cc2c-06ec-48f0-b863-d7ac275ced79.gif)
+
 Real-time abnormal behavior classification using AI-based CCTV
 
 ## Getting Started
