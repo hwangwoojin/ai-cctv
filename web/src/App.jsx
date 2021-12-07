@@ -6,7 +6,7 @@ import Style from "styled-components";
 const socket = io("http://127.0.0.1:8000");
 
 const App = () => {
-  const [dataList, setDataList] = useState([{action: "이상행동", timestamp: new Date(), key: -1}]);
+  const [dataList, setDataList] = useState([{action: "이상행동", key: -1}]);
 
   useEffect(() => {
     socket.on('data', data => {
@@ -26,7 +26,7 @@ const App = () => {
           {dataList.map((data) => (
             <Item key={data.key}>
               <h3>{data.action} 발생</h3>
-              <h4>{data.timestamp.toISOString()}</h4>
+              <h4>{new Date().toISOString()}</h4>
             </Item>
           ))}
         </List>
