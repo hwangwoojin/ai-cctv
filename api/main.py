@@ -23,7 +23,7 @@ def read_root():
 @ socket_manager.on('start')
 async def handle_socket(sid, *args, **kwargs):
     # Open the video.
-    video_cap = cv2.VideoCapture("../videos/a.mp4")
+    video_cap = cv2.VideoCapture("../videos/c.mp4")
     video_n_frames = video_cap.get(cv2.CAP_PROP_FRAME_COUNT)
     video_fps = video_cap.get(cv2.CAP_PROP_FPS)
     video_width = int(video_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -36,6 +36,7 @@ async def handle_socket(sid, *args, **kwargs):
 
     # Run classification on a video.
     frame_idx = 0
+    least_send_frame = 0
     output_frame = None
     results = {}
     with tqdm.tqdm(total=video_n_frames, position=0, leave=True) as pbar:
@@ -43,6 +44,9 @@ async def handle_socket(sid, *args, **kwargs):
             success, input_frame = video_cap.read()
             if not success:
                 break
+            if frame_idx - least_send_frame < 10:
+                frame_idx += 1
+                continue
             frames = model(input_frame)
             frames = frames.pandas().xyxy[0]
             for frame_index in range(len(frames)):
@@ -66,10 +70,13 @@ async def handle_socket(sid, *args, **kwargs):
                         33, 3), 'Unexpected landmarks shape: {}'.format(pose_landmarks.shape)
                     pose_classification = pose_classifier(pose_landmarks)
 
-                    print(pose_classification)
                     for _pose in pose_classification:
-                        if pose_classification[_pose] > 9 and _pose != 'two' and _pose != 'standing' and _pose != 'sitting':
-                            await socket_manager.emit('data', {'action': _pose, 'key': frame_idx})
+                        if pose_classification[_pose] >= 9 and _pose != 'two' and _pose != 'standing' and _pose != 'sitting':
+                            _image = cv2.imencode('.jpeg', output_frame)[
+                                1].tobytes()
+                            await socket_manager.emit('data', {'action': _pose, 'image': _image, 'key': frame_idx})
+                            least_send_frame = frame_idx
+                            break
                 else:
                     pose_classification = None
             frame_idx += 1

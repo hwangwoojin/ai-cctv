@@ -2,16 +2,20 @@ import "./reset.css";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Style from "styled-components";
-
-const socket = io("http://127.0.0.1:8000");
+import { arrayToImageUrl } from "./helper"
 
 const App = () => {
-  const [dataList, setDataList] = useState([{action: "이상행동", key: -1}]);
+  const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
-    socket.on('data', data => {
+    const handleData = (data) => {
+      data.image = arrayToImageUrl(data.image);
       setDataList((prev) => [...prev, data]);
-    });
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    const socket = io("http://127.0.0.1:8000");
+    socket.on('data', handleData);
     socket.emit("start");
   }, []);
   
@@ -25,8 +29,13 @@ const App = () => {
         <List>
           {dataList.map((data) => (
             <Item key={data.key}>
-              <h3>{data.action} 발생</h3>
-              <h4>{new Date().toISOString()}</h4>
+              <div>
+                <ItemImage src={data.image} alt={data.action}/>
+              </div>
+              <ItemText>
+                <h3>{data.action} 발생</h3>
+                <h4>{new Date().toISOString()}</h4>
+              </ItemText>
             </Item>
           ))}
         </List>
@@ -67,12 +76,29 @@ const List = Style.ul`
 
 const Item = Style.li`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
   width: 800px;
   height: 100px;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+`;
+
+const ItemImage = Style.img`
+  width: auto;
+  height: 100%;
+`;
+
+const ItemText = Style.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 20px;
+
+  h3 {
+    font-weight: bold;
+  }
 `;
 
 export default App;
