@@ -14,8 +14,6 @@ Install dependencies for `ai-cctv`.
 
 ```
 pip install -r requirements.txt
-pip install -r Yolov5_DeepSort_Pytorch/requirements.txt
-pip install -r Yolov5_DeepSort_Pytorch/yolov5/requirements.txt
 ```
 
 ## Track the person and save as text file using DeepSort.
@@ -61,6 +59,23 @@ with some restrictions,
 
 1. at abnormal actions.
 2. detect 2 people. (not 1 or 3)
+
+## api
+
+API server for sending the detected abnormal actions.
+
+```
+uvicorn main:app --reload
+```
+
+## web
+
+Client for the abnormal detection.
+
+```
+npm i
+npm run start
+```
 
 ## reference
 
